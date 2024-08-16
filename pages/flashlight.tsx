@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 const img =
   "https://images.unsplash.com/photo-1517239320384-e08ad2c24a3e?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
-const GlitchText = () => {
+const flashLight = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [scrollPosition, setScrollPosition] = useState(0);
   const contentRef = useRef(null);
@@ -13,7 +13,7 @@ const GlitchText = () => {
       " "
     );
 
-  useEffect(() => {
+  useEffect(() => {  
     const handleScroll = () => {
       setScrollPosition(window.scrollY);
     };

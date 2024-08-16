@@ -1,142 +1,159 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
-const Carousel = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const carouselRef = useRef(null);
+const images = [
+  {
+    src: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZmFzaGlvbnxlbnwwfDF8MHx8fDA%3D",
+    color: "#dc9419",
+  },
+  {
+    src: "https://plus.unsplash.com/premium_photo-1668485968642-30e3d15e9b9c?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    color: "#b2778e",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1495385794356-15371f348c31?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDZ8fHxlbnwwfHx8fHw%3D",
+    color: "#45B7D1",
+  },
+  {
 
-  const items = [
-    {
-      id: 1,
-      color: "bg-blue-500",
-      content: "1",
-      borderColor: "border-blue-300",
-    },
-    {
-      id: 2,
-      color: "bg-green-500",
-      content: "2",
-      borderColor: "border-green-300",
-    },
-    { id: 3, color: "bg-red-500", content: "3", borderColor: "border-red-300" },
-    {
-      id: 4,
-      color: "bg-yellow-500",
-      content: "4",
-      borderColor: "border-yellow-300",
-    },
-  ];
+    src: "https://plus.unsplash.com/premium_photo-1669704098750-7cd22c35422b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDh8fHxlbnwwfHx8fHw%3D",
+    color: "#bac7ca",
+  },
+];
 
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
-  };
+const images2 = [
+  {
+    src: "https://images.unsplash.com/photo-1473286835901-04adb1afab03?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGZhc2hpb258ZW58MHwxfDB8fHww",
+    color: "#deaaba",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1542596767-e9c33dc85019?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fGZhc2hpb258ZW58MHwxfDB8fHww",
+    color: "#c5cac5",
+  },
+  {
+    src: "https://plus.unsplash.com/premium_photo-1681433602478-dc69b2b49153?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzd8fGZhc2hpb258ZW58MHwxfDB8fHww",
+    color: "#d4c925",
+  },
+  {
+    src: "https://plus.unsplash.com/premium_photo-1708110921152-850148b86156?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDV8fGZhc2hpb258ZW58MHwxfDB8fHww",
+    color: "#c61f40",
+  },
+];
 
-  const handlePrev = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + items.length) % items.length
-    );
-  };
+let scrollSpeed = 1;
 
-  const getItemClasses = (index) => {
-    const baseClasses =
-      "carousel-item mx-2 rounded-lg transition-all duration-300 ease-in-out flex items-center justify-center text-white text-2xl border-4";
-    const distance = Math.abs(
-      (index - currentIndex + items.length) % items.length
-    );
-
-    if (distance === 0) {
-      return `${baseClasses} w-48 h-48 z-10`;
-    } else {
-      return `${baseClasses} w-32 h-32`;
-    }
-  };
-
-  const getItemStyle = (index) => {
-    const order = (index - currentIndex + items.length) % items.length;
-    return {
-      boxShadow: "0 0 10px 2px rgba(255, 255, 255, 0.7)", // Neon glow effect
-      order: order,
-    };
-  };
-
-  const startDragging = (e) => {
-    setIsDragging(true);
-    setStartX(e.pageX - carouselRef.current.offsetLeft);
-    setScrollLeft(carouselRef.current.scrollLeft);
-  };
-
-  const stopDragging = () => {
-    setIsDragging(false);
-  };
-
-  const onDrag = (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - carouselRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-
-    // Calculate new index based on drag direction
-    const dragDirection = walk > 0 ? -1 : 1;
-    setCurrentIndex(
-      (prevIndex) => (prevIndex + dragDirection + items.length) % items.length
-    );
-  };
+const Carousel: React.FC = () => {
+  const scrollContainer1 = useRef<HTMLDivElement>(null);
+  const scrollContainer2 = useRef<HTMLDivElement>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [hoveredIndex1, setHoveredIndex1] = useState<number | null>(null);
 
   useEffect(() => {
-    const carousel = carouselRef.current;
-    carousel.addEventListener("mousedown", startDragging);
-    carousel.addEventListener("mousemove", onDrag);
-    carousel.addEventListener("mouseup", stopDragging);
-    carousel.addEventListener("mouseleave", stopDragging);
+    const container1 = scrollContainer1.current;
+    const container2 = scrollContainer2.current;
 
-    return () => {
-      carousel.removeEventListener("mousedown", startDragging);
-      carousel.removeEventListener("mousemove", onDrag);
-      carousel.removeEventListener("mouseup", stopDragging);
-      carousel.removeEventListener("mouseleave", stopDragging);
+    if (!container1 || !container2) return;
+
+    const totalScrollHeight1 = container1.scrollHeight / 2;
+    const totalScrollHeight2 = container2.scrollHeight / 2;
+
+    let scrollPos1 = 0;
+    let scrollPos2 = 0;
+
+    const scrollHandler = () => {
+
+      scrollPos1 += scrollSpeed;
+      if (scrollPos1 >= totalScrollHeight1) {
+        scrollPos1 = 0; 
+      }
+      container1.scrollTop = scrollPos1;
+
+
+      scrollPos2 -= scrollSpeed;
+      if (scrollPos2 <= 0) {
+        scrollPos2 = totalScrollHeight2; 
+      }
+      container2.scrollTop = scrollPos2;
+
+      requestAnimationFrame(scrollHandler);
     };
-  }, [isDragging, startX, scrollLeft]);
+
+    requestAnimationFrame(scrollHandler);
+  }, []);
+
+  const renderImage = (
+    imagesArray: typeof images,
+    containerRef: React.RefObject<HTMLDivElement>,
+    hoveredIndexState: number | null,
+    setHoveredIndexState: React.Dispatch<React.SetStateAction<number | null>>,
+    keyPrefix: string
+  ) => (
+    <div
+      ref={containerRef}
+      className="flex flex-col space-y-4 overflow-hidden"
+      style={{ height: "100vh", width: "300px" }}
+    >
+      {[...imagesArray, ...imagesArray].map((image, index) => (
+        <div
+          key={`${keyPrefix}-${index}`}
+          onMouseEnter={() => {
+            scrollSpeed = 0.5;
+            setHoveredIndexState(index % imagesArray.length);
+          }}
+          onMouseLeave={() => {
+            scrollSpeed = 1;
+            setHoveredIndexState(null);
+          }}
+          className="relative w-[300px] h-[400px]"
+        >
+          <div
+            style={{ backgroundColor: image.color }}
+            className={`absolute w-full h-full transition-opacity duration-300 ease-in-out ${
+              hoveredIndexState === index % imagesArray.length
+                ? "opacity-[75%]"
+                : "opacity-0"
+            }`}
+          ></div>
+          <button
+            className={`absolute z-10 top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 bg-white text-black py-3 px-6 rounded-full hover:bg-slate-900 hover:text-white transition-all duration-300 ease-in-out ${
+              hoveredIndexState === index % imagesArray.length
+                ? "opacity-100 scale-100"
+                : "opacity-0 scale-90"
+            }`}
+          >
+            Shop Now
+          </button>
+          <Image
+            src={image.src}
+            alt={`Clothing item ${index + 1}`}
+            width={300}
+            height={400}
+            className="w-[300px] h-[400px] object-cover flex-shrink-0 shadow-lg"
+          />
+        </div>
+      ))}
+    </div>
+  );
 
   return (
-    <div className="flex items-center justify-center h-screen bg-black">
-      <div className="relative w-full max-w-3xl overflow-hidden">
-        <div
-          ref={carouselRef}
-          className="flex items-center transition-all duration-300 ease-in-out"
-          style={{
-            cursor: isDragging ? "grabbing" : "grab",
-            transform: `translateX(${-currentIndex * 144}px)`,
-          }}
-        >
-          {items.map((item, index) => (
-            <div
-              key={item.id}
-              className={`${getItemClasses(index)} ${item.color} ${
-                item.borderColor
-              }`}
-              style={getItemStyle(index)}
-            >
-              {item.content}
-            </div>
-          ))}
-        </div>
-        <button
-          onClick={handlePrev}
-          className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-white bg-opacity-20 p-2 rounded-full shadow-md text-white z-20"
-        >
-          ←
-        </button>
-        <button
-          onClick={handleNext}
-          className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white bg-opacity-20 p-2 rounded-full shadow-md text-white z-20"
-        >
-          →
+    <section className="bg-pink-50 h-screen flex justify-between">
+      <div className="flex text-black w-1/2 mx-[60px] gap-[10px] flex-col items-left justify-center h-screen bg-gray-100 px-4">
+        <h1 className="text-6xl font-bold mb-4 gradient-text">Unveil Your Style</h1>
+        <p className="text-lg text-gray-600 mb-8 text-left max-w-md">
+          Explore the latest trends and timeless pieces that reflect your personality. Elevate your wardrobe with our curated collection designed for every occasion.
+        </p>
+        <button className="bg-pink-400 text-left w-[150px] flex justify-center text-white py-3 px-6 rounded-full hover:bg-pink-500 transition duration-300">
+          Shop Now
         </button>
       </div>
-    </div>
+
+      <div className="flex w-1/2 gap-[16px] items-center justify-end overflow-hidden">
+        {renderImage(images, scrollContainer1, hoveredIndex, setHoveredIndex, "first")}
+        {renderImage(images2, scrollContainer2, hoveredIndex1, setHoveredIndex1, "second")}
+      </div>
+    </section>
   );
 };
 
 export default Carousel;
+  
