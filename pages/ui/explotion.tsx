@@ -35,7 +35,11 @@ const ExplodingButton = ({ children, onAction, className = "" }: any) => {
         startX: Math.random() * buttonDimensions.width,
         startY: Math.random() * buttonDimensions.height,
         x: (Math.random() - 0.5) * buttonDimensions.width * 0.8,
-        y: (Math.random() - 0.5) * buttonDimensions.width * 0.8,
+        y:
+          (Math.random() - 0.5) *
+          buttonDimensions.width *
+          0.8 *
+          Math.sin(90 + i),
         size: Math.random() * 4 + 2,
       });
     }

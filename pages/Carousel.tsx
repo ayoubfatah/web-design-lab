@@ -15,7 +15,6 @@ const images = [
     color: "#45B7D1",
   },
   {
-
     src: "https://plus.unsplash.com/premium_photo-1669704098750-7cd22c35422b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDh8fHxlbnwwfHx8fHw%3D",
     color: "#bac7ca",
   },
@@ -61,17 +60,18 @@ const Carousel: React.FC = () => {
     let scrollPos2 = 0;
 
     const scrollHandler = () => {
-
       scrollPos1 += scrollSpeed;
       if (scrollPos1 >= totalScrollHeight1) {
-        scrollPos1 = 0; 
+        scrollPos1 = 0;
       }
       container1.scrollTop = scrollPos1;
 
+      console.log(scrollPos1, "scrollPos1");
+      console.log(totalScrollHeight1, "totalScrollHeight1");
 
       scrollPos2 -= scrollSpeed;
       if (scrollPos2 <= 0) {
-        scrollPos2 = totalScrollHeight2; 
+        scrollPos2 = totalScrollHeight2;
       }
       container2.scrollTop = scrollPos2;
 
@@ -138,9 +138,13 @@ const Carousel: React.FC = () => {
   return (
     <section className="bg-pink-50 h-screen flex justify-between">
       <div className="flex text-black w-1/2 mx-[60px] gap-[10px] flex-col items-left justify-center h-screen bg-gray-100 px-4">
-        <h1 className="text-6xl font-bold mb-4 gradient-text">Unveil Your Style</h1>
+        <h1 className="text-6xl font-bold mb-4 gradient-text">
+          Unveil Your Style
+        </h1>
         <p className="text-lg text-gray-600 mb-8 text-left max-w-md">
-          Explore the latest trends and timeless pieces that reflect your personality. Elevate your wardrobe with our curated collection designed for every occasion.
+          Explore the latest trends and timeless pieces that reflect your
+          personality. Elevate your wardrobe with our curated collection
+          designed for every occasion.
         </p>
         <button className="bg-pink-400 text-left w-[150px] flex justify-center text-white py-3 px-6 rounded-full hover:bg-pink-500 transition duration-300">
           Shop Now
@@ -148,12 +152,23 @@ const Carousel: React.FC = () => {
       </div>
 
       <div className="flex w-1/2 gap-[16px] items-center justify-end overflow-hidden">
-        {renderImage(images, scrollContainer1, hoveredIndex, setHoveredIndex, "first")}
-        {renderImage(images2, scrollContainer2, hoveredIndex1, setHoveredIndex1, "second")}
+        {renderImage(
+          images,
+          scrollContainer1,
+          hoveredIndex,
+          setHoveredIndex,
+          "first"
+        )}
+        {renderImage(
+          images2,
+          scrollContainer2,
+          hoveredIndex1,
+          setHoveredIndex1,
+          "second"
+        )}
       </div>
     </section>
   );
 };
 
 export default Carousel;
-  
