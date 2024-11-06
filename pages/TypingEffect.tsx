@@ -4,7 +4,7 @@ export default function TypingEffect() {
   const [condition, setCondition] = useState(false);
   const text =
     "In a world where technology and humanity intertwine, the quest for knowledge becomes a journey of discovery. Each day presents new challenges and opportunities, urging us to explore the depths of our potential. As we navigate through the complexities of life, we find ourselves at the crossroads of innovation and tradition, where the past informs our future. The stories we tell and the connections we forge shape our understanding of existence, reminding us that every moment is a chance to learn, grow, and inspire others. Together, we can create a tapestry of experiences that enrich our lives and the lives of those around us.";
-  const delay = 30;
+  const delay = 10;
 
   const [animatedText, setAnimatedText] = useState("");
   const animationRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -76,15 +76,22 @@ export default function TypingEffect() {
   };
 
   return (
-    <div className="h-screen w-full flex flex-col justify-center items-center">
-      <div className="flex gap-1 mb-[50px]">
-        <div className="w-[800px]  h-[200px]">{animatedText}</div>
+    <>
+      <h1 className="text-center translate-y-[100px] text-3xl glitch">
+        TYPING EFFECT
+      </h1>
+      <div className="h-screen w-full flex flex-col justify-center items-center">
+        <div className="flex gap-1 mb-[50px]">
+          <div className="w-[800px] py-10 px-6  bg-gradient-to-b from-slate-700/40 rounded-t-xl to-transparent">
+            {animatedText}
+          </div>
+        </div>
+        <div className="flex gap-3 items-center">
+          <button onClick={handlePlay}>Resume</button>
+          <button onClick={handleStop}>Stop</button>
+          <button onClick={handleRest}>Reset</button>
+        </div>
       </div>
-      <div className="flex gap-3 items-center">
-        <button onClick={handlePlay}>Resume</button>
-        <button onClick={handleStop}>Stop</button>
-        <button onClick={handleRest}>Reset</button>
-      </div>
-    </div>
+    </>
   );
 }
