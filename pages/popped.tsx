@@ -1,5 +1,5 @@
 import React from "react";
-import ExplodingButton from "./ui/explotion";
+import ExplodingButton from "./components/ui/explotion";
 
 const App = () => {
   const handleAction1 = () => {

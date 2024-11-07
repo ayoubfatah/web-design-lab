@@ -1,5 +1,5 @@
 import React from "react";
-import HolographicDisplay from "./ui/glitchImage";
+import HolographicDisplay from "./components/ui/glitchImage";
 
 export default function Falling() {
   const img = { src: "https://avatars.githubusercontent.com/u/106997303?v=4" };
