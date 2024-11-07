@@ -4,9 +4,9 @@ import { motion, AnimatePresence } from "framer-motion";
 const colors = [
   { bg: "#FF0000", name: "red" },
   { bg: "#00FF00", name: "green" },
-  { bg: "#0000FF", name: "blue" },
-  { bg: "#FFD700", name: "gold" },
-  { bg: "#FF1493", name: "pink" },
+  { bg: "#ffffff", name: "white" },
+  { bg: "#2f2e2a", name: "slate" },
+  { bg: "#544f52", name: "slateLow" },
   { bg: "#800080", name: "purple" },
   { bg: "#FFA500", name: "orange" },
   { bg: "#008080", name: "teal" },
@@ -21,10 +21,12 @@ const cards = [
 ];
 
 export default function App() {
+  const [newColor, setNewColor] = useState<string | undefined>("");
   const handleCardColorChange = (index: number, color: string) => {
-    console.log(`Card ${index} color changed to: ${color}`);
+    const getColorName = colors.find((cr) => cr.bg === color);
+    setNewColor(getColorName?.name);
   };
-
+  console.log(newColor);
   return (
     <ColorChangeElement initialColor="#f3f4f6" className="min-h-screen">
       <div className="relative">
@@ -32,9 +34,16 @@ export default function App() {
           <ColorChangeElement
             initialColor="#ffffff"
             className="w-full p-4 shadow-md"
+            onColorChange={(color) => handleCardColorChange?.(1, color)}
           >
             <div className="flex text-center items-center justify-center max-w-6xl mx-auto">
-              <h1 className="text-2xl font-bold">Tahanout</h1>
+              <h1
+                className={`text-2xl font-bold ${
+                  newColor === "red" ? "text-blue-500" : "text-green-500"
+                }`}
+              >
+                Tahanout
+              </h1>
             </div>
           </ColorChangeElement>
 
@@ -84,7 +93,7 @@ function DraggableColorPalette({ colors }: { colors: Color[] }) {
           onDragStart={(e: any) => handleDragStart(color, e)}
           whileHover={{ scale: 1.1 }}
           whileDrag={{ scale: 1.2 }}
-          className="w-8 h-8 rounded-full cursor-move"
+          className="w-8 h-8 rounded-full cursor-move border border-"
           style={{ backgroundColor: color.bg }}
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}

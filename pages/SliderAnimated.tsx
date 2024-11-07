@@ -18,11 +18,12 @@ function decay(value: number, max: number) {
   let sigmoid = 2 / (1 + Math.exp(-entry)) - 1;
   return sigmoid * max;
 }
-
+ 
 export default function Component() {
-  const [region, setRegion] = useState<"left" | "middle" | "right">("middle");
+  const [location, setLocation] = useState<"left" | "middle" | "right">(
+    "middle"
+  );
   const sliderRef = useRef<HTMLDivElement>(null);
-
   const [volume, setVolume] = useState(30);
   const [isMuted, setIsMuted] = useState(false);
 
@@ -35,15 +36,15 @@ export default function Component() {
       : { width: 0 };
 
     if (latest < 0) {
-      setRegion("left");
+      setLocation("left");
 
       x.set(decay(latest, 60));
     } else if (latest > width) {
-      setRegion("right");
+      setLocation("right");
 
       x.set(decay(latest - width, 60));
     } else {
-      setRegion("middle");
+      setLocation("middle");
       x.set(0);
     }
   });
@@ -58,12 +59,12 @@ export default function Component() {
   const toggleMute = useCallback(() => {
     setIsMuted(!isMuted);
   }, [isMuted]);
-  console.log(region);
+  console.log(location);
   return (
     <div className="w-full min-h-screen bg-zinc-6600 flex items-center justify-center">
       <div className="w-full max-w-md p-6 rounded-lg space-y-3">
         <div className="flex items-center gap-1">
-          <motion.div style={{ x: region === "left" ? x : 0 }}>
+          <motion.div style={{ x: location === "left" ? x : 0 }}>
             <Button
               variant="destructive"
               size="icon"
@@ -85,11 +86,11 @@ export default function Component() {
                   ? sliderRef.current.getBoundingClientRect()
                   : { width: 0 };
 
-                return region === "left"
+                return location === "left"
                   ? (width - x.get()) / width
                   : (width + x.get()) / width;
               }),
-              transformOrigin: region === "left" ? "right" : "left",
+              transformOrigin: location === "left" ? "right" : "left",
             }}
             className="flex-1"
           >
@@ -114,16 +115,12 @@ export default function Component() {
             />
           </motion.div>
 
-          <motion.div style={{ x: region === "right" ? x : 0 }}>
+          <motion.div style={{ x: location === "right" ? x : 0 }}>
             <Button variant="destructive" size="icon" className="text-pink  ">
               <Volume2 className="h-10 w-10" />
               <span className="sr-only">Volume</span>
             </Button>
           </motion.div>
-        </div>
-
-        <div className="text-center text-white/90 text-lg">
-          Volume: {isMuted ? 0 : volume}
         </div>
       </div>
     </div>
