@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import FakeWebsite from "./FakeWebsite";
 
 const colors = [
   { bg: "#FF0000", name: "red" },
@@ -12,6 +13,7 @@ const colors = [
   { bg: "#008080", name: "teal" },
   { bg: "#4B0082", name: "indigo" },
   { bg: "#32CD32", name: "lime" },
+  { bg: "#000000", name: "black" },
 ];
 
 const cards = [
@@ -65,16 +67,18 @@ export default function App() {
           </main>
         </div>
 
+        {/*  */}
         <DraggableColorPalette colors={colors} />
       </div>
     </ColorChangeElement>
   );
 }
 
-function DraggableColorPalette({ colors }: { colors: Color[] }) {
+export function DraggableColorPalette({ colors }: { colors: Color[] }) {
   const handleDragStart = useCallback(
     (color: Color, e: React.DragEvent<HTMLDivElement>) => {
       e.dataTransfer.setData("color", JSON.stringify(color));
+      console.log("dropped");
     },
     []
   );
@@ -123,7 +127,7 @@ interface ColorChangeElementProps {
   children: React.ReactNode;
 }
 
-function ColorChangeElement({
+export function ColorChangeElement({
   initialColor = "white",
   onColorChange,
   className,
@@ -137,12 +141,14 @@ function ColorChangeElement({
     (e: React.DragEvent<HTMLDivElement>) => {
       e.preventDefault();
       e.stopPropagation();
+
       const color = JSON.parse(e.dataTransfer.getData("color")) as Color;
       const rect = elementRef.current?.getBoundingClientRect();
       if (rect) {
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
+        console.log(color, rect);
         setCircles((prevCircles) => [
           ...prevCircles,
           {
