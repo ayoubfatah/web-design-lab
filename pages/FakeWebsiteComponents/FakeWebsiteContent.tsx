@@ -146,7 +146,7 @@ export default function FakeWebsiteContent() {
           className={cn(
             "grid bg-white h-full border overflow-hidden transition-all duration-150 ease-in-out",
             {
-              "grid-cols-[230px,1fr]": showSidebar && sideBarShowing !== 3,
+              "grid-cols-[200px,1fr]": showSidebar && sideBarShowing !== 3,
               "grid-cols-[60px,1fr]": showSidebar && sideBarShowing === 3,
               "grid-cols-[0px,1fr]": !showSidebar,
             }
@@ -154,16 +154,16 @@ export default function FakeWebsiteContent() {
         >
           <div>
             {showSidebar && (
-              <div className="border-r-[1px] h-full">
+              <div className="border-r-[1px] h-full w-full">
                 <ul>
                   {sideBarShowing === 1 && (
                     <div
-                      className={`${SidebarAnimation} px-12 flex flex-col pt-4  bg-white items-start gap-4 justify`}
+                      className={`${SidebarAnimation}  flex flex-col pt-4    gap-4 justify-center   w-full`}
                     >
                       {navItems.map((item, index) => (
                         <li
                           key={index}
-                          className="flex items-center gap-2 text-black rounded-md p-2 transition-colors"
+                          className="flex px-7 gap-2  text-black p-2 transition-colors"
                         >
                           <item.icon className="w-5 h-5" />
                           <span>{item.label}</span>
@@ -171,6 +171,7 @@ export default function FakeWebsiteContent() {
                       ))}
                     </div>
                   )}
+
                   {sideBarShowing === 2 && (
                     <div className={` px-3 py-5 `}>
                       {navItems2.map((group, groupIndex) => (
@@ -199,14 +200,14 @@ export default function FakeWebsiteContent() {
                   )}
                   {sideBarShowing === 3 && (
                     <div
-                      className={`${SidebarAnimation}  flex flex-col pt-4    bg-white h-full gap-4 justify-center items-center`}
+                      className={`${SidebarAnimation}  flex flex-col pt-4     bg-white h-full gap-4 justify-center items-center`}
                     >
                       {navItems3.map((item, index) => (
                         <li
                           key={index}
                           className="flex items-center gap-2 text-black rounded-md p-2 transition-colors"
                         >
-                          <item.icon className="w-5 h-5" />
+                          <item.icon className="w-5 h-5 " />
                         </li>
                       ))}
                     </div>
