@@ -142,7 +142,9 @@ export function ColorChangeElement({
       e.preventDefault();
       e.stopPropagation();
 
-      const color = JSON.parse(e.dataTransfer.getData("color")) as Color;
+      const color = e.dataTransfer.getData("color")
+        ? (JSON.parse(e.dataTransfer.getData("color")) as Color)
+        : null;
       const rect = elementRef.current?.getBoundingClientRect();
       if (rect) {
         const x = e.clientX - rect.left;
@@ -154,13 +156,13 @@ export function ColorChangeElement({
           {
             x,
             y,
-            color: color.bg,
+            color: color?.bg ?? " ",
             id: Date.now(),
           },
         ]);
 
-        setActiveColor(color.bg);
-        onColorChange?.(color.bg);
+        setActiveColor(color ? color?.bg : "");
+        onColorChange?.(color ? color?.bg : "");
       }
     },
     [onColorChange]

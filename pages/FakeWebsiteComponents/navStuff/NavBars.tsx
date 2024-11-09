@@ -25,13 +25,14 @@ const animation =
 export const Navbar: React.FC<{ nav1v: number }> = ({ nav1v }) => {
   return (
     <ul
-      className={` ${animation}   h-[66px]  text-black  flex items-center w-full justify-between py-3 px-2  rounded-t-md"`}
+      className={` ${animation}   h-[66px]   flex items-center w-full justify-between py-3 px-2  rounded-t-md"`}
     >
       {nav1v === 1 && (
         <div
           className={`${animation}  flex items-center justify-between w-full`}
         >
-          <Logo />
+          <h1 className="text-4xl font-bold">TS</h1>
+          {/* <Logo /> */}
           <ul className="flex  gap-5">
             <li>Home</li>
             <li>About</li>
@@ -47,7 +48,8 @@ export const Navbar: React.FC<{ nav1v: number }> = ({ nav1v }) => {
         <div
           className={`${animation}  flex items-center justify-between w-full`}
         >
-          <Logo />
+          <h1 className="text-4xl font-bold">TS</h1>
+          {/* <Logo /> */}
           <ul className="flex  gap-5">
             <li>Home</li>
             <li>About</li>
@@ -61,7 +63,8 @@ export const Navbar: React.FC<{ nav1v: number }> = ({ nav1v }) => {
           className={`${animation}  flex items-center justify-between w-full`}
         >
           <div className="flex items-center gap-10">
-            <Logo />
+            <h1 className="text-4xl font-bold">TS</h1>
+            {/* <Logo /> */}
             <ul className="flex  gap-5 ">
               <li>Home</li>
               <li>About</li>
@@ -71,14 +74,14 @@ export const Navbar: React.FC<{ nav1v: number }> = ({ nav1v }) => {
           </div>
           <div className="flex items-center gap-3">
             <div className="relative">
-              <MessageCircle className="h-6 w-6  text-gray-700  " />
+              <MessageCircle className="h-6 w-6    " />
               <Badge className=" bg-red-600  rounded-full absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs">
                 3
               </Badge>
             </div>
 
             <div className="relative">
-              <Bell className="h-6 w-6  text-gray-700 " />
+              <Bell className="h-6 w-6   " />
               <Badge className=" bg-red-600 rounded-full absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs">
                 5
               </Badge>
@@ -105,7 +108,8 @@ export const Navbar2: React.FC<{ nav2v: number }> = ({ nav2v }) => {
         <div
           className={`${animation} flex justify-between w-full items-center`}
         >
-          <Logo />
+          <h1 className="text-4xl font-bold">TS</h1>
+          {/* <Logo /> */}
           {nav2v === 1 && <SearchInput1 />}
           <div className={`${animation}`}>
             <Avatar>
@@ -119,7 +123,8 @@ export const Navbar2: React.FC<{ nav2v: number }> = ({ nav2v }) => {
         <div
           className={`${animation} flex justify-between w-full items-center`}
         >
-          <Logo />
+          <h1 className="text-4xl font-bold">TS</h1>
+          {/* <Logo /> */}
           {nav2v === 2 && <SearchInput2 />}
           <div className={`${animation}`}>
             <Avatar>
@@ -133,7 +138,8 @@ export const Navbar2: React.FC<{ nav2v: number }> = ({ nav2v }) => {
         <div
           className={`${animation} flex flex-wrap items-center justify-between w-full`}
         >
-          <Logo />
+          <h1 className="text-4xl font-bold">TS</h1>
+          {/* <Logo /> */}
           <div className="flex-1 min-w-[200px] max-w-xs">
             <div className="relative">
               <Search className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -143,14 +149,14 @@ export const Navbar2: React.FC<{ nav2v: number }> = ({ nav2v }) => {
 
           <div className="flex items-center space-x-4">
             <div className="relative">
-              <MessageCircle className="h-6 w-6  text-gray-700  " />
+              <MessageCircle className="h-6 w-6    " />
               <Badge className=" bg-red-600  rounded-full absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs">
                 3
               </Badge>
             </div>
 
             <div className="relative">
-              <Bell className="h-6 w-6  text-gray-700 " />
+              <Bell className="h-6 w-6   " />
               <Badge className=" bg-red-600 rounded-full absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs">
                 5
               </Badge>
