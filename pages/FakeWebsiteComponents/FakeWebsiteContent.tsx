@@ -15,6 +15,7 @@ import {
 
 import {
   BookOpen,
+  ChevronDown,
   Clock,
   Code2,
   Filter,
@@ -36,7 +37,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import SideBarSettings from "./sideBarComp/SideBarSettings";
-
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 // Types
 interface Course {
   id: number;
@@ -191,17 +200,176 @@ const COURSES: Course[] = [
   },
 ];
 
+const courses = [
+  {
+    id: 1,
+    title: "Advanced TypeScript Development",
+    instructor: "Sarah Wilson",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlGmKtrnxElpqw3AExKXPWWBulcwjlvDJa1Q&s",
+    tags: ["TypeScript", "Web Development"],
+    duration: "8 hours",
+    level: "Advanced",
+    students: 1234,
+    rating: 4.8,
+    price: 49.99,
+  },
+  {
+    id: 2,
+    title: "React Performance and Optimization",
+    instructor: "Mike Chen",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlGmKtrnxElpqw3AExKXPWWBulcwjlvDJa1Q&s",
+    tags: ["React", "Optimization"],
+    duration: "6 hours",
+    level: "Intermediate",
+    students: 892,
+    rating: 4.8,
+    price: 39.99,
+  },
+  {
+    id: 3,
+    title: "Cloud Architecture Fundamentals",
+    instructor: "Alex Kumar",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlGmKtrnxElpqw3AExKXPWWBulcwjlvDJa1Q&s",
+    tags: ["AWS", "Cloud Computing"],
+    duration: "10 hours",
+    level: "Beginner",
+    students: 2156,
+    rating: 4.9,
+    price: 59.99,
+  },
+  {
+    id: 4,
+    title: "Machine Learning with Python",
+    instructor: "Emma Davis",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlGmKtrnxElpqw3AExKXPWWBulcwjlvDJa1Q&s",
+    tags: ["Python", "ML"],
+    duration: "12 hours",
+    level: "Intermediate",
+    students: 1567,
+    rating: 4.7,
+    price: 69.99,
+  },
+  {
+    id: 5,
+    title: "DevOps Best Practices",
+    instructor: "Tom Smith",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlGmKtrnxElpqw3AExKXPWWBulcwjlvDJa1Q&s",
+    tags: ["CI/CD", "Docker"],
+    duration: "9 hours",
+    level: "Advanced",
+    students: 945,
+    rating: 4.5,
+    price: 49.99,
+  },
+  {
+    id: 6,
+    title: "Full Stack Development",
+    instructor: "Lisa Johnson",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlGmKtrnxElpqw3AExKXPWWBulcwjlvDJa1Q&s",
+    tags: ["JavaScript", "Node.js"],
+    duration: "15 hours",
+    level: "Intermediate",
+    students: 3421,
+    rating: 4.8,
+    price: 79.99,
+  },
+  {
+    id: 7,
+    title: "Machine Learning with Python - Advanced",
+    instructor: "Emma Davis",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlGmKtrnxElpqw3AExKXPWWBulcwjlvDJa1Q&s",
+    tags: ["Python", "ML"],
+    duration: "12 hours",
+    level: "Advanced",
+    students: 1567,
+    rating: 4.7,
+    price: 69.99,
+  },
+  {
+    id: 8,
+    title: "DevOps Best Practices - Advanced",
+    instructor: "Tom Smith",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlGmKtrnxElpqw3AExKXPWWBulcwjlvDJa1Q&s",
+    tags: ["CI/CD", "Docker"],
+    duration: "9 hours",
+    level: "Advanced",
+    students: 945,
+    rating: 4.5,
+    price: 49.99,
+  },
+  {
+    id: 9,
+    title: "Full Stack Development - Advanced",
+    instructor: "Lisa Johnson",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlGmKtrnxElpqw3AExKXPWWBulcwjlvDJa1Q&s",
+    tags: ["JavaScript", "Node.js"],
+    duration: "15 hours",
+    level: "Advanced",
+    students: 3421,
+    rating: 4.8,
+    price: 79.99,
+  },
+  {
+    id: 10,
+    title: "Full Stack Development - Advanced",
+    instructor: "Lisa Johnson",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlGmKtrnxElpqw3AExKXPWWBulcwjlvDJa1Q&s",
+    tags: ["JavaScript", "Node.js"],
+    duration: "15 hours",
+    level: "Advanced",
+    students: 3421,
+    rating: 4.8,
+    price: 79.99,
+  },
+  {
+    id: 11,
+    title: "Full Stack Development - Advanced",
+    instructor: "Lisa Johnson",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlGmKtrnxElpqw3AExKXPWWBulcwjlvDJa1Q&s",
+    tags: ["JavaScript", "Node.js"],
+    duration: "15 hours",
+    level: "Advanced",
+    students: 3421,
+    rating: 4.8,
+    price: 79.99,
+  },
+  {
+    id: 12,
+    title: "Full Stack Development - Advanced",
+    instructor: "Lisa Johnson",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlGmKtrnxElpqw3AExKXPWWBulcwjlvDJa1Q&s",
+    tags: ["JavaScript", "Node.js"],
+    duration: "15 hours",
+    level: "Advanced",
+    students: 3421,
+    rating: 4.8,
+    price: 79.99,
+  },
+];
 // Components
 
 export default function FakeWebsiteContent() {
   const [showSidebar, setShowSidebar] = useState(true);
-  const [nav2v, setNav2v] = useState<number>(1);
-  const [nav1v, setNav1v] = useState<number>(1);
+  const [navbarVersion2, setNavbarVersion2] = useState<number>(1);
+  const [navbarVersion1, setNavbarVersion1] = useState<number>(1);
   const [navBarSHowing, setNavBarSHowing] = useState<number>(1);
   const [sideBarShowing, setSideBarShowing] = useState<number>(1);
   const [hideCardContentImage, setHideCardContentImage] = useState(true);
   const [hideInstructorName, setHideInstructorName] = useState(true);
-
+  const [showContentAsCards, setShowContentAsCards] = useState(true);
+  const [] = useState();
   const handleSidebarToggle = useCallback(() => {
     setShowSidebar((prev) => !prev);
   }, []);
@@ -218,12 +386,12 @@ export default function FakeWebsiteContent() {
         <ColorChangeElement>
           <nav
             className={cn(
-              "border-b-[1px] px-4 relative  flex items-center",
+              "border-[1px] px-4 relative  flex items-center",
               LAYOUT.NAV_HEIGHT
             )}
           >
-            {navBarSHowing === 1 && <Navbar nav1v={nav1v} />}
-            {navBarSHowing === 2 && <Navbar2 nav2v={nav2v} />}
+            {navBarSHowing === 1 && <Navbar navbarVersion1={navbarVersion1} />}
+            {navBarSHowing === 2 && <Navbar2 navbarVersion2={navbarVersion2} />}
           </nav>
         </ColorChangeElement>
 
@@ -252,23 +420,97 @@ export default function FakeWebsiteContent() {
                   <h1 className="text-2xl font-bold">Course Catalog</h1>
                   <SearchAndFilters />
                 </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2  overflow-hidden ">
-                  {COURSES.map((course, i) => (
-                    <SlideInElement key={course.id} delay={course.id * 0.1}>
-                      <ColorChangeElement>
-                        <CourseCard
-                          i={i}
-                          className={``}
-                          hideCardContentImage={hideCardContentImage}
-                          hideInstructorName={hideInstructorName}
-                          key={course.id}
-                          course={course}
-                        />
-                      </ColorChangeElement>
-                    </SlideInElement>
-                  ))}
-                </div>
+                {/* VERSION 1
+                 */}
+                {showContentAsCards ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2  overflow-hidden ">
+                    {COURSES.map((course, i) => (
+                      <SlideInElement key={course.id} delay={course.id * 0.1}>
+                        <ColorChangeElement>
+                          <CourseCard
+                            i={i}
+                            className={``}
+                            hideCardContentImage={hideCardContentImage}
+                            hideInstructorName={hideInstructorName}
+                            key={course.id}
+                            course={course}
+                          />
+                        </ColorChangeElement>
+                      </SlideInElement>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="container mx-auto py-4">
+                    <Table>
+                      <TableHeader>
+                        <TableRow className="stairsAnimation hover:bg-transparent !text-inherit">
+                          <TableHead className="!text-inherit opacity-70 w-[400px]">
+                            Course
+                          </TableHead>
+                          <TableHead className="!text-inherit opacity-70">
+                            Instructor
+                          </TableHead>
+                          <TableHead className="!text-inherit opacity-70">
+                            Duration
+                          </TableHead>
+                          <TableHead className="!text-inherit opacity-70">
+                            Level
+                          </TableHead>
+                          <TableHead className="!text-inherit opacity-70">
+                            Price
+                          </TableHead>
+                          <TableHead className="!text-inherit opacity-70 text-right">
+                            Actions
+                          </TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {courses.map((course, i) => (
+                          <TableRow
+                            style={{ animationDelay: `${(i + 1) * 0.1}s` }}
+                            className={`stairsAnimation`}
+                            key={course.id}
+                          >
+                            <TableCell>
+                              <div className="flex items-center gap-4">
+                                <div className="flex flex-col gap-1">
+                                  <div className="font-medium">
+                                    {course.title}
+                                  </div>
+                                  <div className="flex gap-2">
+                                    {course.tags.map((tag) => (
+                                      <Badge
+                                        key={tag}
+                                        variant="secondary"
+                                        className="px-2 py-0.5 text-xs"
+                                      >
+                                        {tag}
+                                      </Badge>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            </TableCell>
+                            <TableCell>{course.instructor}</TableCell>
+                            <TableCell>{course.duration}</TableCell>
+                            <TableCell>{course.level}</TableCell>
+                            <TableCell>${course.price}</TableCell>
+                            <TableCell className="text-right">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8"
+                              >
+                                <ChevronDown className="h-4 w-4" />
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                )}
+                :
               </div>
             </div>
           </ColorChangeElement>
@@ -282,10 +524,10 @@ export default function FakeWebsiteContent() {
         <ColorChangeElement initialColor="white" className="">
           <div className="flex">
             <NavSettings
-              setNav1v={setNav1v}
-              setNav2v={setNav2v}
-              nav1v={nav1v}
-              nav2v={nav2v}
+              setNavbarVersion1={setNavbarVersion1}
+              setNavbarVersion2={setNavbarVersion2}
+              navbarVersion1={navbarVersion1}
+              navbarVersion2={navbarVersion2}
               setNavBarSHowing={setNavBarSHowing}
               navBarSHowing={navBarSHowing}
             />
@@ -298,20 +540,41 @@ export default function FakeWebsiteContent() {
           />
           {/* cards */}
 
-          <RoundedCheckbox
-            label="card image"
-            checked={hideCardContentImage}
-            onChange={() => {
-              setHideCardContentImage(!hideCardContentImage);
-            }}
-          />
-          <RoundedCheckbox
-            label="author"
-            checked={hideInstructorName}
-            onChange={() => {
-              setHideInstructorName(!hideInstructorName);
-            }}
-          />
+          {/* turning to list or car */}
+          <div className="flex items-center gap-4">
+            <RoundedCheckbox
+              label="Card"
+              checked={showContentAsCards}
+              onChange={() => {
+                setShowContentAsCards(!showContentAsCards);
+              }}
+            />
+            <RoundedCheckbox
+              label="List"
+              checked={!showContentAsCards}
+              onChange={() => {
+                setShowContentAsCards(!showContentAsCards);
+              }}
+            />
+            {showContentAsCards && (
+              <>
+                <RoundedCheckbox
+                  label="card image"
+                  checked={hideCardContentImage}
+                  onChange={() => {
+                    setHideCardContentImage(!hideCardContentImage);
+                  }}
+                />
+                <RoundedCheckbox
+                  label="author"
+                  checked={hideInstructorName}
+                  onChange={() => {
+                    setHideInstructorName(!hideInstructorName);
+                  }}
+                />
+              </>
+            )}
+          </div>
         </ColorChangeElement>
       </ColorChangeElement>
     </main>

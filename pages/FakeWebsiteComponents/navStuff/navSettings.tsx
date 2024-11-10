@@ -2,27 +2,27 @@ import React, { Dispatch, SetStateAction } from "react";
 import { RoundedCheckbox } from "../RoundedCheckbox";
 
 type NavSettingsTypes = {
-  setNav1v: Dispatch<SetStateAction<number>>;
-  setNav2v: Dispatch<SetStateAction<number>>;
+  setNavbarVersion1: Dispatch<SetStateAction<number>>;
+  setNavbarVersion2: Dispatch<SetStateAction<number>>;
   setNavBarSHowing: Dispatch<SetStateAction<number>>;
   navBarSHowing: number;
-  nav2v: number;
-  nav1v: number;
+  navbarVersion2: number;
+  navbarVersion1: number;
 };
 export default function navSettings({
-  setNav1v,
-  setNav2v,
+  setNavbarVersion1,
+  setNavbarVersion2,
   setNavBarSHowing,
   navBarSHowing,
-  nav2v,
-  nav1v,
+  navbarVersion2,
+  navbarVersion1,
 }: NavSettingsTypes) {
   return (
     <>
       <div className="flex gap-1 mr-4">
         <RoundedCheckbox
           onChange={() => {
-            setNav1v(1);
+            setNavbarVersion1(1);
             setNavBarSHowing(1);
           }}
           checked={navBarSHowing === 1}
@@ -30,7 +30,7 @@ export default function navSettings({
         />
         <RoundedCheckbox
           onChange={() => {
-            setNav2v(1);
+            setNavbarVersion2(1);
             setNavBarSHowing(2);
           }}
           checked={navBarSHowing === 2}
@@ -38,10 +38,16 @@ export default function navSettings({
         />
       </div>
       {navBarSHowing === 2 && (
-        <NavBar2Options nav2v={nav2v} setNav2v={setNav2v} />
+        <NavBar2Options
+          navbarVersion2={navbarVersion2}
+          setNavbarVersion2={setNavbarVersion2}
+        />
       )}
       {navBarSHowing === 1 && (
-        <NavBar1Options setNav1v={setNav1v} nav1v={nav1v} />
+        <NavBar1Options
+          setNavbarVersion1={setNavbarVersion1}
+          navbarVersion1={navbarVersion1}
+        />
       )}
     </>
   );
@@ -51,33 +57,33 @@ export default function navSettings({
 //
 //
 function NavBar2Options({
-  setNav2v,
-  nav2v,
+  setNavbarVersion2,
+  navbarVersion2,
 }: {
-  setNav2v: Dispatch<SetStateAction<number>>;
-  nav2v: number;
+  setNavbarVersion2: Dispatch<SetStateAction<number>>;
+  navbarVersion2: number;
 }) {
   return (
     <div>
       <div className="flex gap-1 items-center">
         <RoundedCheckbox
-          checked={nav2v === 1}
+          checked={navbarVersion2 === 1}
           onChange={() => {
-            setNav2v(1);
+            setNavbarVersion2(1);
           }}
           label="v1"
         />
         <RoundedCheckbox
-          checked={nav2v === 2}
+          checked={navbarVersion2 === 2}
           onChange={() => {
-            setNav2v(2);
+            setNavbarVersion2(2);
           }}
           label="v2"
         />
         <RoundedCheckbox
-          checked={nav2v === 3}
+          checked={navbarVersion2 === 3}
           onChange={() => {
-            setNav2v(3);
+            setNavbarVersion2(3);
           }}
           label="v3"
         />
@@ -87,33 +93,33 @@ function NavBar2Options({
 }
 
 function NavBar1Options({
-  setNav1v,
-  nav1v,
+  setNavbarVersion1,
+  navbarVersion1,
 }: {
-  setNav1v: Dispatch<SetStateAction<number>>;
-  nav1v: number;
+  setNavbarVersion1: Dispatch<SetStateAction<number>>;
+  navbarVersion1: number;
 }) {
   return (
     <div>
       <div className="flex gap-1 items-center">
         <RoundedCheckbox
-          checked={nav1v === 1}
+          checked={navbarVersion1 === 1}
           onChange={() => {
-            setNav1v(1);
+            setNavbarVersion1(1);
           }}
           label="v1"
         />
         <RoundedCheckbox
-          checked={nav1v === 2}
+          checked={navbarVersion1 === 2}
           onChange={() => {
-            setNav1v(2);
+            setNavbarVersion1(2);
           }}
           label="v2"
         />
         <RoundedCheckbox
-          checked={nav1v === 3}
+          checked={navbarVersion1 === 3}
           onChange={() => {
-            setNav1v(3);
+            setNavbarVersion1(3);
           }}
           label="v3"
         />

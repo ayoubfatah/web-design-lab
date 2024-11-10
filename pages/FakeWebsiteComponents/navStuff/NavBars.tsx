@@ -22,12 +22,14 @@ const colors = [
 
 const animation =
   "motion-translate-x-in-[0%] motion-translate-y-in-[52%] motion-opacity-in-[0%] motion-blur-in-[5px] motion-duration-[0.35s] motion-duration-[0.53s]/translate";
-export const Navbar: React.FC<{ nav1v: number }> = ({ nav1v }) => {
+export const Navbar: React.FC<{ navbarVersion1: number }> = ({
+  navbarVersion1,
+}) => {
   return (
     <ul
       className={` ${animation}   h-[66px]   flex items-center w-full justify-between py-3 px-2  rounded-t-md"`}
     >
-      {nav1v === 1 && (
+      {navbarVersion1 === 1 && (
         <div
           className={`${animation}  flex items-center justify-between w-full`}
         >
@@ -44,7 +46,7 @@ export const Navbar: React.FC<{ nav1v: number }> = ({ nav1v }) => {
           </Avatar>
         </div>
       )}
-      {nav1v === 2 && (
+      {navbarVersion1 === 2 && (
         <div
           className={`${animation}  flex items-center justify-between w-full`}
         >
@@ -58,7 +60,7 @@ export const Navbar: React.FC<{ nav1v: number }> = ({ nav1v }) => {
           </ul>
         </div>
       )}
-      {nav1v === 3 && (
+      {navbarVersion1 === 3 && (
         <div
           className={`${animation}  flex items-center justify-between w-full`}
         >
@@ -96,7 +98,9 @@ export const Navbar: React.FC<{ nav1v: number }> = ({ nav1v }) => {
   );
 };
 
-export const Navbar2: React.FC<{ nav2v: number }> = ({ nav2v }) => {
+export const Navbar2: React.FC<{ navbarVersion2: number }> = ({
+  navbarVersion2,
+}) => {
   const animation =
     "motion-translate-x-in-[0%] motion-translate-y-in-[72%] motion-opacity-in-[0%] motion-blur-in-[5px] motion-duration-[0.35s] motion-duration-[0.53s]/translate";
 
@@ -104,13 +108,13 @@ export const Navbar2: React.FC<{ nav2v: number }> = ({ nav2v }) => {
     <ul
       className={` ${animation}  h-[66px]  top-0 left-0 flex items-center w-full justify-around py-3 px-2 rounded-t-md"`}
     >
-      {nav2v === 1 && (
+      {navbarVersion2 === 1 && (
         <div
           className={`${animation} flex justify-between w-full items-center`}
         >
           <h1 className="text-4xl font-bold">TS</h1>
           {/* <Logo /> */}
-          {nav2v === 1 && <SearchInput1 />}
+          {navbarVersion2 === 1 && <SearchInput1 />}
           <div className={`${animation}`}>
             <Avatar>
               <AvatarImage src="https://i.pravatar.cc/150?img=52" />
@@ -119,13 +123,13 @@ export const Navbar2: React.FC<{ nav2v: number }> = ({ nav2v }) => {
         </div>
       )}
 
-      {nav2v === 2 && (
+      {navbarVersion2 === 2 && (
         <div
           className={`${animation} flex justify-between w-full items-center`}
         >
           <h1 className="text-4xl font-bold">TS</h1>
           {/* <Logo /> */}
-          {nav2v === 2 && <SearchInput2 />}
+          {navbarVersion2 === 2 && <SearchInput2 />}
           <div className={`${animation}`}>
             <Avatar>
               <AvatarImage src="https://i.pravatar.cc/150?img=28" />
@@ -134,7 +138,7 @@ export const Navbar2: React.FC<{ nav2v: number }> = ({ nav2v }) => {
         </div>
       )}
 
-      {nav2v === 3 && (
+      {navbarVersion2 === 3 && (
         <div
           className={`${animation} flex flex-wrap items-center justify-between w-full`}
         >
