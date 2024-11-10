@@ -46,6 +46,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import ToggleButton from "./toggleButton";
 // Types
 interface Course {
   id: number;
@@ -58,6 +59,7 @@ interface Course {
   students: number;
   image: string;
   tags: string[];
+  price: number;
 }
 
 // Constants
@@ -93,6 +95,7 @@ const COURSES: Course[] = [
     students: 1234,
     image: "https://blog.theodo.com/_astro/ts_logo.BstCNrTU_1Dbxpr.webp",
     tags: ["TypeScript", "Web Development"],
+    price: 49.99,
   },
   {
     id: 2,
@@ -106,6 +109,7 @@ const COURSES: Course[] = [
     image:
       "https://images.squarespace-cdn.com/content/v1/638f10c47f505a72c6c86073/742d280c-683c-41b0-ac08-c70ee193dbe9/reactJS.jpg",
     tags: ["React", "Optimization"],
+    price: 39.99,
   },
   {
     id: 3,
@@ -119,6 +123,7 @@ const COURSES: Course[] = [
     image:
       "https://www.supplychaininfo.eu/wp-content/uploads/2019/07/shutterstock_611605280-compressor-1.jpg",
     tags: ["AWS", "Cloud Computing"],
+    price: 59.99,
   },
   {
     id: 4,
@@ -132,6 +137,7 @@ const COURSES: Course[] = [
     image:
       "https://www.supplychaininfo.eu/wp-content/uploads/2019/07/shutterstock_611605280-compressor-1.jpg",
     tags: ["Python", "ML", "Data Science"],
+    price: 69.99,
   },
   {
     id: 5,
@@ -145,6 +151,7 @@ const COURSES: Course[] = [
     image:
       "https://www.supplychaininfo.eu/wp-content/uploads/2019/07/shutterstock_611605280-compressor-1.jpg",
     tags: ["CI/CD", "Docker", "Kubernetes"],
+    price: 49.99,
   },
   {
     id: 6,
@@ -158,6 +165,7 @@ const COURSES: Course[] = [
     image:
       "https://www.supplychaininfo.eu/wp-content/uploads/2019/07/shutterstock_611605280-compressor-1.jpg",
     tags: ["JavaScript", "Node.js", "React"],
+    price: 79.99,
   },
   {
     id: 7,
@@ -171,6 +179,7 @@ const COURSES: Course[] = [
     image:
       "https://www.supplychaininfo.eu/wp-content/uploads/2019/07/shutterstock_611605280-compressor-1.jpg",
     tags: ["Python", "ML", "Data Science"],
+    price: 69.99,
   },
   {
     id: 8,
@@ -184,6 +193,7 @@ const COURSES: Course[] = [
     image:
       "https://www.supplychaininfo.eu/wp-content/uploads/2019/07/shutterstock_611605280-compressor-1.jpg",
     tags: ["CI/CD", "Docker", "Kubernetes"],
+    price: 49.99,
   },
   {
     id: 9,
@@ -197,10 +207,11 @@ const COURSES: Course[] = [
     image:
       "https://www.supplychaininfo.eu/wp-content/uploads/2019/07/shutterstock_611605280-compressor-1.jpg",
     tags: ["JavaScript", "Node.js", "React"],
+    price: 79.99,
   },
 ];
 
-const courses = [
+const COURSES_LIST = [
   {
     id: 1,
     title: "Advanced TypeScript Development",
@@ -358,6 +369,7 @@ const courses = [
     price: 79.99,
   },
 ];
+
 // Components
 
 export default function FakeWebsiteContent() {
@@ -366,9 +378,10 @@ export default function FakeWebsiteContent() {
   const [navbarVersion1, setNavbarVersion1] = useState<number>(1);
   const [navBarSHowing, setNavBarSHowing] = useState<number>(1);
   const [sideBarShowing, setSideBarShowing] = useState<number>(1);
-  const [hideCardContentImage, setHideCardContentImage] = useState(true);
-  const [hideInstructorName, setHideInstructorName] = useState(true);
+  const [hideCardContentImage, setHideCardContentImage] = useState(false);
+  const [hideInstructorName, setHideInstructorName] = useState(false);
   const [showContentAsCards, setShowContentAsCards] = useState(true);
+  const [showPrice, setShowPrice] = useState(false);
   const [] = useState();
   const handleSidebarToggle = useCallback(() => {
     setShowSidebar((prev) => !prev);
@@ -425,10 +438,15 @@ export default function FakeWebsiteContent() {
                 {showContentAsCards ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2  overflow-hidden ">
                     {COURSES.map((course, i) => (
-                      <SlideInElement key={course.id} delay={course.id * 0.1}>
+                      <div
+                        className="stairsAnimation"
+                        key={course.id}
+                        style={{ animationDelay: `${(i + 1) * 0.1}s` }}
+                      >
                         <ColorChangeElement>
                           <CourseCard
                             i={i}
+                            showPrice={showPrice}
                             className={``}
                             hideCardContentImage={hideCardContentImage}
                             hideInstructorName={hideInstructorName}
@@ -436,7 +454,7 @@ export default function FakeWebsiteContent() {
                             course={course}
                           />
                         </ColorChangeElement>
-                      </SlideInElement>
+                      </div>
                     ))}
                   </div>
                 ) : (
@@ -465,7 +483,7 @@ export default function FakeWebsiteContent() {
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {courses.map((course, i) => (
+                        {COURSES_LIST.map((course, i) => (
                           <TableRow
                             style={{ animationDelay: `${(i + 1) * 0.1}s` }}
                             className={`stairsAnimation`}
@@ -518,64 +536,158 @@ export default function FakeWebsiteContent() {
       </div>
 
       <ColorChangeElement
-        initialColor="purple"
-        className="w-[400px] flex-1 -order-1 flex items-center"
+        initialColor="white"
+        className="w-[500px]   py-10 px-8 space-y-8 flex-1 -order-1 font-medium justify-center flex items-start"
       >
-        <ColorChangeElement initialColor="white" className="">
-          <div className="flex">
-            <NavSettings
-              setNavbarVersion1={setNavbarVersion1}
-              setNavbarVersion2={setNavbarVersion2}
-              navbarVersion1={navbarVersion1}
-              navbarVersion2={navbarVersion2}
-              setNavBarSHowing={setNavBarSHowing}
-              navBarSHowing={navBarSHowing}
+        <div className="mb-4">
+          <h1 className="text-[30px] font-bold">Ultimate Customization</h1>
+          <p className="text-[18px] ">
+            A market-leading solution offering unmatched flexibility for
+            innovative needs.
+          </p>
+        </div>
+        {/*  */}
+        <aside className="flex flex-col gap-8">
+          <div className="flex  items-center gap-4 ">
+            <ToggleButton
+              initialState={false}
+              onChange={() => {
+                setNavbarVersion2(1);
+              }}
             />
+            <div>
+              <h1 className="font-semibold text-[20px]">Navbar</h1>
+              <p className="text-[14px]">Choose from various navigation</p>
+            </div>
+            {/* <NavSettings
+            setNavbarVersion1={setNavbarVersion1}
+            setNavbarVersion2={setNavbarVersion2}
+            navbarVersion1={navbarVersion1}
+            navbarVersion2={navbarVersion2}
+            setNavBarSHowing={setNavBarSHowing}
+            navBarSHowing={navBarSHowing}
+          /> */}
           </div>
-          <SideBarSettings
-            showSidebar={showSidebar}
-            sideBarShowing={sideBarShowing}
-            handleSidebarToggle={handleSidebarToggle}
-            setSideBarShowing={setSideBarShowing}
-          />
-          {/* cards */}
+          {/* search */}
+          <div className="flex  items-center gap-4  ">
+            <ToggleButton
+              initialState={false}
+              onChange={() => {
+                setNavbarVersion2(1);
+                setNavBarSHowing(2);
+              }}
+            />
+            <div>
+              <h1 className="font-semibold text-[20px]">Navbar with Search</h1>
+              <p className="text-[14px]">Choose from various navigation</p>
+            </div>
+            {/* <NavSettings
+            setNavbarVersion1={setNavbarVersion1}
+            setNavbarVersion2={setNavbarVersion2}
+            navbarVersion1={navbarVersion1}
+            navbarVersion2={navbarVersion2}
+            setNavBarSHowing={setNavBarSHowing}
+            navBarSHowing={navBarSHowing}
+          /> */}
+          </div>
+          {/*  side bar */}
+          <div className="flex  items-center gap-4  ">
+            <ToggleButton initialState={true} onChange={handleSidebarToggle} />
+            <div>
+              <div>
+                <h1 className="font-semibold text-[20px]">
+                  Sidebar Customization
+                </h1>
+                <p className="text-[14px]">
+                  Choose from sidebar styles to complement your layout.
+                </p>
+              </div>
 
-          {/* turning to list or car */}
-          <div className="flex items-center gap-4">
-            <RoundedCheckbox
-              label="Card"
-              checked={showContentAsCards}
-              onChange={() => {
-                setShowContentAsCards(!showContentAsCards);
-              }}
-            />
-            <RoundedCheckbox
-              label="List"
-              checked={!showContentAsCards}
-              onChange={() => {
-                setShowContentAsCards(!showContentAsCards);
-              }}
-            />
+              {/* <SideBarSettings
+              showSidebar={showSidebar}
+              sideBarShowing={sideBarShowing}
+              handleSidebarToggle={handleSidebarToggle}
+              setSideBarShowing={setSideBarShowing}
+            /> */}
+            </div>
+          </div>
+          {/*  */}
+          <div className="flex flex-col  gap-10  ">
+            {/* content  as cards or list */}
+            <div className="flex text-[17px] items-center  gap-4">
+              <div className=" items-center gap-4">
+                <ToggleButton
+                  initialState={true}
+                  onChange={() => {
+                    setShowContentAsCards(!showContentAsCards);
+                  }}
+                />
+              </div>
+              <div>
+                <h1 className="font-semibold text-[19px]">Card or List </h1>
+                <p className="text-[14px]">
+                  Different use case requires different view
+                </p>
+              </div>
+            </div>
+
+            {/* cards */}
+
+            {/* turning to list or car */}
+
             {showContentAsCards && (
               <>
-                <RoundedCheckbox
-                  label="card image"
-                  checked={hideCardContentImage}
-                  onChange={() => {
-                    setHideCardContentImage(!hideCardContentImage);
-                  }}
-                />
-                <RoundedCheckbox
-                  label="author"
-                  checked={hideInstructorName}
-                  onChange={() => {
-                    setHideInstructorName(!hideInstructorName);
-                  }}
-                />
+                {/* Image */}
+                <div className="flex gap-4 font-semibold   items-center">
+                  <ToggleButton
+                    initialState={true}
+                    onChange={() => {
+                      setHideCardContentImage(!hideCardContentImage);
+                    }}
+                  />
+                  <div className="flex flex-col">
+                    <h1 className="text-[19px]">Card Images</h1>
+                    <p className="text-[14px]">
+                      {" "}
+                      Different use case requires different view
+                    </p>
+                  </div>
+                </div>
+                {/* Instructor */}
+                <div className="flex gap-4 font-semibold   items-center">
+                  <ToggleButton
+                    initialState={true}
+                    onChange={() => {
+                      setHideInstructorName(!hideInstructorName);
+                    }}
+                  />
+                  <div className="flex flex-col">
+                    <h1 className="text-[19px]">Instructor</h1>
+                    <p className="text-[14px]">
+                      {" "}
+                      Different use case requires different view
+                    </p>
+                  </div>
+                </div>
+                {/* price */}
+                <div className="flex gap-4 font-semibold  items-center">
+                  <ToggleButton
+                    initialState={false}
+                    onChange={() => {
+                      setShowPrice(!showPrice);
+                    }}
+                  />
+                  <div className="flex flex-col">
+                    <h1 className="text-[19px]">Show Price</h1>
+                    <p className="text-[14px]">
+                      Different use case requires different view
+                    </p>
+                  </div>
+                </div>
               </>
             )}
           </div>
-        </ColorChangeElement>
+        </aside>
       </ColorChangeElement>
     </main>
   );
@@ -587,7 +699,15 @@ const CourseCard: React.FC<{
   hideInstructorName: boolean;
   className: string;
   i: number;
-}> = ({ course, hideCardContentImage, hideInstructorName, className, i }) => (
+  showPrice: boolean;
+}> = ({
+  course,
+  hideCardContentImage,
+  showPrice,
+  hideInstructorName,
+  className,
+  i,
+}) => (
   <Card
     className={cn(
       className,
@@ -654,8 +774,21 @@ const CourseCard: React.FC<{
         </div>
       </div>
     </CardContent>
-    <CardFooter className="p-4 pt-0">
-      <Button className="w-full ">Enroll Now</Button>
+    <CardFooter className="px-2 pt-2 flex justify-between ">
+      {showPrice ? (
+        <>
+          <p className="motion-translate-x-in-[0%] motion-translate-y-in-[20%] motion-opacity-in-[0%] font-extrabold text-2xl">
+            {course.price}$
+          </p>
+          <Button className="motion-translate-x-in-[0%] motion-translate-y-in-[20%] motion-opacity-in-[0%] ">
+            Enroll Now
+          </Button>
+        </>
+      ) : (
+        <Button className="motion-translate-x-in-[0%] motion-translate-y-in-[20%] motion-opacity-in-[0%] w-full">
+          Enroll Now
+        </Button>
+      )}
     </CardFooter>
   </Card>
 );
@@ -678,20 +811,3 @@ const SearchAndFilters: React.FC = () => (
     </Select>
   </div>
 );
-
-const SlideInElement = ({ children, delay = 0 }: any) => {
-  return (
-    <motion.div
-      className={`z-[${delay * 10}]`}
-      initial={{ x: "-10%", opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{
-        duration: 0.3,
-        delay: delay,
-        ease: "easeIn",
-      }}
-    >
-      {children}
-    </motion.div>
-  );
-};

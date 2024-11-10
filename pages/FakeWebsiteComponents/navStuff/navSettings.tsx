@@ -18,25 +18,7 @@ export default function navSettings({
   navbarVersion1,
 }: NavSettingsTypes) {
   return (
-    <>
-      <div className="flex gap-1 mr-4">
-        <RoundedCheckbox
-          onChange={() => {
-            setNavbarVersion1(1);
-            setNavBarSHowing(1);
-          }}
-          checked={navBarSHowing === 1}
-          label="Nav 1"
-        />
-        <RoundedCheckbox
-          onChange={() => {
-            setNavbarVersion2(1);
-            setNavBarSHowing(2);
-          }}
-          checked={navBarSHowing === 2}
-          label="Nav 2"
-        />
-      </div>
+    <div className="flex  gap-1  text-[18px] justify-between items-center">
       {navBarSHowing === 2 && (
         <NavBar2Options
           navbarVersion2={navbarVersion2}
@@ -49,7 +31,7 @@ export default function navSettings({
           navbarVersion1={navbarVersion1}
         />
       )}
-    </>
+    </div>
   );
 }
 
@@ -65,27 +47,27 @@ function NavBar2Options({
 }) {
   return (
     <div>
-      <div className="flex gap-1 items-center">
-        <RoundedCheckbox
-          checked={navbarVersion2 === 1}
-          onChange={() => {
-            setNavbarVersion2(1);
-          }}
-          label="v1"
-        />
+      <div className="flex gap-2 items-center">
         <RoundedCheckbox
           checked={navbarVersion2 === 2}
           onChange={() => {
             setNavbarVersion2(2);
           }}
-          label="v2"
+          label="Lite"
+        />
+        <RoundedCheckbox
+          checked={navbarVersion2 === 1}
+          onChange={() => {
+            setNavbarVersion2(1);
+          }}
+          label="Plus"
         />
         <RoundedCheckbox
           checked={navbarVersion2 === 3}
           onChange={() => {
             setNavbarVersion2(3);
           }}
-          label="v3"
+          label="Max"
         />
       </div>
     </div>
@@ -101,27 +83,27 @@ function NavBar1Options({
 }) {
   return (
     <div>
-      <div className="flex gap-1 items-center">
+      <div className="flex gap-2 items-center">
         <RoundedCheckbox
           checked={navbarVersion1 === 1}
           onChange={() => {
             setNavbarVersion1(1);
           }}
-          label="v1"
+          label="Lite"
         />
         <RoundedCheckbox
           checked={navbarVersion1 === 2}
           onChange={() => {
             setNavbarVersion1(2);
           }}
-          label="v2"
+          label="Plus"
         />
         <RoundedCheckbox
           checked={navbarVersion1 === 3}
           onChange={() => {
             setNavbarVersion1(3);
           }}
-          label="v3"
+          label="Max"
         />
       </div>
     </div>
