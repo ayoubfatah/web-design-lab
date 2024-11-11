@@ -38,7 +38,7 @@ export default function navSettings({
 // NAV OPTIONS
 //
 //
-function NavBar2Options({
+export function NavBar2Options({
   setNavbarVersion2,
   navbarVersion2,
 }: {
@@ -74,7 +74,7 @@ function NavBar2Options({
   );
 }
 
-function NavBar1Options({
+export function NavBar1Options({
   setNavbarVersion1,
   navbarVersion1,
 }: {

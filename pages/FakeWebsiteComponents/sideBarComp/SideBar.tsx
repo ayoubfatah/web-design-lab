@@ -97,9 +97,9 @@ export default function SideBar({
   sideBarShowing: number;
 }) {
   return (
-    <div>
+    <div className="">
       {showSidebar && (
-        <div className="border-r-[1px] h-full w-full">
+        <div className=" h-full w-full">
           <ul>
             {sideBarShowing === 1 && (
               <div

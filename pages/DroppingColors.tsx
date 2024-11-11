@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import FakeWebsite from "./FakeWebsite";
+import { PhotoshopPicker, SketchPicker, SwatchesPicker } from "react-color";
 
 const colors = [
   { bg: "#FF0000", name: "red" },
@@ -68,43 +69,9 @@ export default function App() {
         </div>
 
         {/*  */}
-        <DraggableColorPalette colors={colors} />
+        <DraggableColorPalette />
       </div>
     </ColorChangeElement>
-  );
-}
-
-export function DraggableColorPalette({ colors }: { colors: Color[] }) {
-  const handleDragStart = useCallback(
-    (color: Color, e: React.DragEvent<HTMLDivElement>) => {
-      e.dataTransfer.setData("color", JSON.stringify(color));
-      console.log("dropped");
-    },
-    []
-  );
-
-  return (
-    <motion.div
-      className="fixed left-4 top-20 flex flex-col gap-3 p-3 rounded-lg bg-white shadow-lg"
-      initial={{ x: -100 }}
-      animate={{ x: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      {colors.map((color, index) => (
-        <motion.div
-          key={color.bg}
-          draggable="true"
-          onDragStart={(e: any) => handleDragStart(color, e)}
-          whileHover={{ scale: 1.1 }}
-          whileDrag={{ scale: 1.2 }}
-          className="w-8 h-8 rounded-full cursor-move border border-"
-          style={{ backgroundColor: color.bg }}
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: index * 0.1 }}
-        />
-      ))}
-    </motion.div>
   );
 }
 
@@ -218,4 +185,87 @@ function isColorDark(hexColor: string): boolean {
   const b = parseInt(hexColor.slice(5, 7), 16);
   const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
   return luminance < 0.5;
+}
+
+export function DraggableColorPalette() {
+  const [colors, setColors] = useState<Color[]>([
+    { bg: "#ffffff", name: "white" },
+    { bg: "#2f2e2a", name: "slate" },
+    { bg: "#544f52", name: "slateLow" },
+    { bg: "#800080", name: "purple" },
+    { bg: "#4B0082", name: "indigo" },
+    { bg: "#101720", name: "smokyBlaxk" },
+    { bg: "#0b1215", name: "obsidian" },
+  ]);
+
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [newColor, setNewColor] = useState<Color | null>(null);
+
+  const handleDragStart = useCallback(
+    (color: Color, e: React.DragEvent<HTMLDivElement>) => {
+      e.dataTransfer.setData("color", JSON.stringify(color));
+    },
+    []
+  );
+
+  const handleColorChange = (color: { hex: string }) => {
+    setNewColor({ bg: color.hex, name: "New Color" });
+  };
+
+  const handleAddColor = () => {
+    if (newColor) {
+      setColors([...colors, newColor]);
+      setNewColor(null);
+      setShowColorPicker(false);
+    }
+  };
+
+  const handleColorPickerToggle = () => {
+    setShowColorPicker(!showColorPicker);
+  };
+
+  return (
+    <motion.div
+      className="fixed left-[180px] bottom-4 flex gap-3 p-3 rounded-lg  z-40 bg-white shadow-lg"
+      initial={{ x: -100 }}
+      animate={{ x: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      {colors.map((color, index) => (
+        <motion.div
+          key={color.bg}
+          draggable="true"
+          onDragStart={(e: any) => handleDragStart(color, e)}
+          whileHover={{ scale: 1.1 }}
+          whileDrag={{ scale: 1.2 }}
+          className="w-8 h-8 rounded-full cursor-move border border-"
+          style={{ backgroundColor: color.bg }}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+        />
+      ))}
+      <div className="relative">
+        <motion.div
+          className="w-8 h-8 rounded-full cursor-pointer text-black flex justify-center items-center border text-[19px] font-bold"
+          onClick={handleColorPickerToggle}
+          whileHover={{ scale: 1.1 }}
+        >
+          +
+        </motion.div>
+        {showColorPicker && (
+          <div className="absolute  left-0 bottom-10 z-[1000]">
+            <PhotoshopPicker
+              onCancel={() => {
+                setShowColorPicker(false);
+              }}
+              color={newColor?.bg || "#ffffff"}
+              onChange={handleColorChange}
+              onAccept={handleAddColor}
+              className="rounded-lg  z-40 shadow-lg !bg-white !text-black"
+            />
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
 }

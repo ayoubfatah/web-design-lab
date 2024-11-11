@@ -1,7 +1,10 @@
 import { useEffect, useState, useCallback } from "react";
 import { Navbar, Navbar2 } from "./navStuff/NavBars";
 import { m, motion } from "framer-motion";
-import NavSettings from "./navStuff/navSettings";
+import NavSettings, {
+  NavBar1Options,
+  NavBar2Options,
+} from "./navStuff/navSettings";
 import { ColorChangeElement, DraggableColorPalette } from "../DroppingColors";
 import { RoundedCheckbox } from "./RoundedCheckbox";
 import { cn } from "@/lib/utils";
@@ -93,7 +96,8 @@ const COURSES: Course[] = [
     duration: "8 hours",
     rating: 4.8,
     students: 1234,
-    image: "https://blog.theodo.com/_astro/ts_logo.BstCNrTU_1Dbxpr.webp",
+    image:
+      "https://images.squarespace-cdn.com/content/v1/638f10c47f505a72c6c86073/742d280c-683c-41b0-ac08-c70ee193dbe9/reactJS.jpg",
     tags: ["TypeScript", "Web Development"],
     price: 49.99,
   },
@@ -107,7 +111,7 @@ const COURSES: Course[] = [
     rating: 4.6,
     students: 892,
     image:
-      "https://images.squarespace-cdn.com/content/v1/638f10c47f505a72c6c86073/742d280c-683c-41b0-ac08-c70ee193dbe9/reactJS.jpg",
+      "https://clickysoft.com/wp-content/uploads/2023/05/React-Performance-Optimization-1536x864-1.jpg",
     tags: ["React", "Optimization"],
     price: 39.99,
   },
@@ -121,7 +125,7 @@ const COURSES: Course[] = [
     rating: 4.9,
     students: 2156,
     image:
-      "https://www.supplychaininfo.eu/wp-content/uploads/2019/07/shutterstock_611605280-compressor-1.jpg",
+      "https://media.licdn.com/dms/image/v2/D4E12AQEaJ2VT2YswYQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1712701594392?e=2147483647&v=beta&t=3v_ZZDrLftut0Uvsb1iblohbuPMMDtZuQGiLYZ0fmmo",
     tags: ["AWS", "Cloud Computing"],
     price: 59.99,
   },
@@ -135,7 +139,7 @@ const COURSES: Course[] = [
     rating: 4.7,
     students: 1567,
     image:
-      "https://www.supplychaininfo.eu/wp-content/uploads/2019/07/shutterstock_611605280-compressor-1.jpg",
+      "https://www.creativeitinstitute.com/images/course/course_1662804460.jpg",
     tags: ["Python", "ML", "Data Science"],
     price: 69.99,
   },
@@ -149,7 +153,7 @@ const COURSES: Course[] = [
     rating: 4.5,
     students: 945,
     image:
-      "https://www.supplychaininfo.eu/wp-content/uploads/2019/07/shutterstock_611605280-compressor-1.jpg",
+      "https://images.clickittech.com/2020/wp-content/uploads/2020/10/14174250/Devops-best-practices-banner-29-29.jpg",
     tags: ["CI/CD", "Docker", "Kubernetes"],
     price: 49.99,
   },
@@ -163,7 +167,7 @@ const COURSES: Course[] = [
     rating: 4.8,
     students: 3421,
     image:
-      "https://www.supplychaininfo.eu/wp-content/uploads/2019/07/shutterstock_611605280-compressor-1.jpg",
+      "https://s3.ap-south-1.amazonaws.com/cdn.pwskills.com/assets/uploads/course-thumbnail/845ca3af-58ee-4229-b05c-8c8a61844126.jpeg",
     tags: ["JavaScript", "Node.js", "React"],
     price: 79.99,
   },
@@ -177,7 +181,7 @@ const COURSES: Course[] = [
     rating: 4.7,
     students: 1567,
     image:
-      "https://www.supplychaininfo.eu/wp-content/uploads/2019/07/shutterstock_611605280-compressor-1.jpg",
+      "https://images.squarespace-cdn.com/content/v1/638f10c47f505a72c6c86073/742d280c-683c-41b0-ac08-c70ee193dbe9/reactJS.jpg",
     tags: ["Python", "ML", "Data Science"],
     price: 69.99,
   },
@@ -191,7 +195,7 @@ const COURSES: Course[] = [
     rating: 4.5,
     students: 945,
     image:
-      "https://www.supplychaininfo.eu/wp-content/uploads/2019/07/shutterstock_611605280-compressor-1.jpg",
+      "https://images.squarespace-cdn.com/content/v1/638f10c47f505a72c6c86073/742d280c-683c-41b0-ac08-c70ee193dbe9/reactJS.jpg",
     tags: ["CI/CD", "Docker", "Kubernetes"],
     price: 49.99,
   },
@@ -205,7 +209,7 @@ const COURSES: Course[] = [
     rating: 4.8,
     students: 3421,
     image:
-      "https://www.supplychaininfo.eu/wp-content/uploads/2019/07/shutterstock_611605280-compressor-1.jpg",
+      "https://images.squarespace-cdn.com/content/v1/638f10c47f505a72c6c86073/742d280c-683c-41b0-ac08-c70ee193dbe9/reactJS.jpg",
     tags: ["JavaScript", "Node.js", "React"],
     price: 79.99,
   },
@@ -376,7 +380,9 @@ export default function FakeWebsiteContent() {
   const [showSidebar, setShowSidebar] = useState(true);
   const [navbarVersion2, setNavbarVersion2] = useState<number>(1);
   const [navbarVersion1, setNavbarVersion1] = useState<number>(1);
-  const [navBarSHowing, setNavBarSHowing] = useState<number>(1);
+  const [navbarWithSearch, setNavbarWithSearch] = useState(false);
+
+  //
   const [sideBarShowing, setSideBarShowing] = useState<number>(1);
   const [hideCardContentImage, setHideCardContentImage] = useState(false);
   const [hideInstructorName, setHideInstructorName] = useState(false);
@@ -403,12 +409,12 @@ export default function FakeWebsiteContent() {
               LAYOUT.NAV_HEIGHT
             )}
           >
-            {navBarSHowing === 1 && <Navbar navbarVersion1={navbarVersion1} />}
-            {navBarSHowing === 2 && <Navbar2 navbarVersion2={navbarVersion2} />}
+            {!navbarWithSearch && <Navbar navbarVersion1={navbarVersion1} />}
+            {navbarWithSearch && <Navbar2 navbarVersion2={navbarVersion2} />}
           </nav>
         </ColorChangeElement>
 
-        <DraggableColorPalette colors={colors} />
+        <DraggableColorPalette />
 
         <div
           className={cn(
@@ -426,8 +432,8 @@ export default function FakeWebsiteContent() {
               showSidebar={showSidebar}
             />
           </ColorChangeElement>
-          <ColorChangeElement initialColor="white">
-            <div className="flex-grow h-screen w-full overflow-y-hidden">
+          <ColorChangeElement>
+            <div className="border-l-[1px]  flex-grow h-screen w-full overflow-y-hidden">
               <div className="container mx-auto p-4">
                 <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                   <h1 className="text-2xl font-bold">Course Catalog</h1>
@@ -436,12 +442,17 @@ export default function FakeWebsiteContent() {
                 {/* VERSION 1
                  */}
                 {showContentAsCards ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2  overflow-hidden ">
+                  <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2  overflow-hidden ">
                     {COURSES.map((course, i) => (
                       <div
                         className="stairsAnimation"
                         key={course.id}
-                        style={{ animationDelay: `${(i + 1) * 0.1}s` }}
+                        style={{
+                          animationName: "revers_stair_effect",
+                          animationDuration: "0.2s",
+                          animationTimingFunction: "ease forwards",
+                          animationDelay: `${(COURSES.length - i) * 0.05}s`,
+                        }}
                       >
                         <ColorChangeElement>
                           <CourseCard
@@ -458,25 +469,29 @@ export default function FakeWebsiteContent() {
                     ))}
                   </div>
                 ) : (
-                  <div className="container mx-auto py-4">
+                  <div className="container mx-auto py-4 transition-all duration-700">
                     <Table>
                       <TableHeader>
                         <TableRow className="stairsAnimation hover:bg-transparent !text-inherit">
                           <TableHead className="!text-inherit opacity-70 w-[400px]">
                             Course
                           </TableHead>
-                          <TableHead className="!text-inherit opacity-70">
-                            Instructor
-                          </TableHead>
+                          {!hideInstructorName && (
+                            <TableHead className="!text-inherit opacity-70">
+                              Instructor
+                            </TableHead>
+                          )}
                           <TableHead className="!text-inherit opacity-70">
                             Duration
                           </TableHead>
                           <TableHead className="!text-inherit opacity-70">
                             Level
                           </TableHead>
-                          <TableHead className="!text-inherit opacity-70">
-                            Price
-                          </TableHead>
+                          {showPrice && (
+                            <TableHead className="!text-inherit opacity-70">
+                              Price
+                            </TableHead>
+                          )}
                           <TableHead className="!text-inherit opacity-70 text-right">
                             Actions
                           </TableHead>
@@ -485,7 +500,7 @@ export default function FakeWebsiteContent() {
                       <TableBody>
                         {COURSES_LIST.map((course, i) => (
                           <TableRow
-                            style={{ animationDelay: `${(i + 1) * 0.1}s` }}
+                            style={{ animationDelay: `${(i + 1) * 0.07}s` }}
                             className={`stairsAnimation`}
                             key={course.id}
                           >
@@ -509,10 +524,14 @@ export default function FakeWebsiteContent() {
                                 </div>
                               </div>
                             </TableCell>
-                            <TableCell>{course.instructor}</TableCell>
+                            {!hideInstructorName && (
+                              <TableCell>{course.instructor}</TableCell>
+                            )}
                             <TableCell>{course.duration}</TableCell>
                             <TableCell>{course.level}</TableCell>
-                            <TableCell>${course.price}</TableCell>
+                            {showPrice && (
+                              <TableCell>${course.price}</TableCell>
+                            )}
                             <TableCell className="text-right">
                               <Button
                                 variant="ghost"
@@ -537,87 +556,126 @@ export default function FakeWebsiteContent() {
 
       <ColorChangeElement
         initialColor="white"
-        className="w-[500px]   py-10 px-8 space-y-8 flex-1 -order-1 font-medium justify-center flex items-start"
+        className="w-[500px]   pt-4 px-8 space-y-8 flex-1 -order-1 font-medium justify-center flex items-start"
       >
         <div className="mb-4">
-          <h1 className="text-[30px] font-bold">Ultimate Customization</h1>
+          <h1 className="text-[30px] font-bold">Limitless Customization</h1>
           <p className="text-[18px] ">
-            A market-leading solution offering unmatched flexibility for
-            innovative needs.
+            Unmatched flexibility for all your unique needs.
           </p>
         </div>
         {/*  */}
         <aside className="flex flex-col gap-8">
           <div className="flex  items-center gap-4 ">
             <ToggleButton
-              initialState={false}
+              initialState={!navbarWithSearch}
               onChange={() => {
-                setNavbarVersion2(1);
+                setNavbarWithSearch(!navbarWithSearch);
               }}
             />
             <div>
-              <h1 className="font-semibold text-[20px]">Navbar</h1>
-              <p className="text-[14px]">Choose from various navigation</p>
+              <h1 className="font-semibold text-[20px]">Default Navbar</h1>
+              <p className="text-[14px]">Customize top navigation style.</p>
+              <div className="flex gap-2 items-center">
+                <RoundedCheckbox
+                  checked={navbarVersion1 === 1}
+                  onChange={() => {
+                    setNavbarVersion1(1);
+                  }}
+                  label="v1"
+                />
+                <RoundedCheckbox
+                  checked={navbarVersion1 === 2}
+                  onChange={() => {
+                    setNavbarVersion1(2);
+                  }}
+                  label="v2"
+                />
+                <RoundedCheckbox
+                  checked={navbarVersion1 === 3}
+                  onChange={() => {
+                    setNavbarVersion1(3);
+                  }}
+                  label="v3"
+                />
+              </div>
             </div>
-            {/* <NavSettings
-            setNavbarVersion1={setNavbarVersion1}
-            setNavbarVersion2={setNavbarVersion2}
-            navbarVersion1={navbarVersion1}
-            navbarVersion2={navbarVersion2}
-            setNavBarSHowing={setNavBarSHowing}
-            navBarSHowing={navBarSHowing}
-          /> */}
           </div>
+
           {/* search */}
           <div className="flex  items-center gap-4  ">
             <ToggleButton
-              initialState={false}
+              initialState={navbarWithSearch}
               onChange={() => {
-                setNavbarVersion2(1);
-                setNavBarSHowing(2);
+                setNavbarWithSearch(!navbarWithSearch);
               }}
             />
             <div>
               <h1 className="font-semibold text-[20px]">Navbar with Search</h1>
-              <p className="text-[14px]">Choose from various navigation</p>
+              <p className="text-[14px]">Enable search bar in navigation.</p>
+              <div className="flex gap-2 items-center">
+                <RoundedCheckbox
+                  checked={navbarVersion2 === 2}
+                  onChange={() => {
+                    setNavbarVersion2(2);
+                  }}
+                  label="v1"
+                />
+                <RoundedCheckbox
+                  checked={navbarVersion2 === 1}
+                  onChange={() => {
+                    setNavbarVersion2(1);
+                  }}
+                  label="v2"
+                />
+                <RoundedCheckbox
+                  checked={navbarVersion2 === 3}
+                  onChange={() => {
+                    setNavbarVersion2(3);
+                  }}
+                  label="v3"
+                />
+              </div>
             </div>
+
             {/* <NavSettings
-            setNavbarVersion1={setNavbarVersion1}
-            setNavbarVersion2={setNavbarVersion2}
-            navbarVersion1={navbarVersion1}
-            navbarVersion2={navbarVersion2}
-            setNavBarSHowing={setNavBarSHowing}
-            navBarSHowing={navBarSHowing}
-          /> */}
+              setNavbarVersion1={setNavbarVersion1}
+              setNavbarVersion2={setNavbarVersion2}
+              navbarVersion1={navbarVersion1}
+              navbarVersion2={navbarVersion2}
+              setNavBarSHowing={setNavBarSHowing}
+              navBarSHowing={navBarSHowing}
+            /> */}
           </div>
           {/*  side bar */}
           <div className="flex  items-center gap-4  ">
-            <ToggleButton initialState={true} onChange={handleSidebarToggle} />
+            <ToggleButton
+              initialState={showSidebar}
+              onChange={() => setShowSidebar(!showSidebar)}
+            />
             <div>
               <div>
                 <h1 className="font-semibold text-[20px]">
                   Sidebar Customization
                 </h1>
-                <p className="text-[14px]">
-                  Choose from sidebar styles to complement your layout.
-                </p>
+                <p className="text-[14px]">Choose sidebar style.</p>
               </div>
 
-              {/* <SideBarSettings
-              showSidebar={showSidebar}
-              sideBarShowing={sideBarShowing}
-              handleSidebarToggle={handleSidebarToggle}
-              setSideBarShowing={setSideBarShowing}
-            /> */}
+              <SideBarSettings
+                showSidebar={showSidebar}
+                sideBarShowing={sideBarShowing}
+                handleSidebarToggle={handleSidebarToggle}
+                setSideBarShowing={setSideBarShowing}
+              />
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col  gap-10  ">
+          <div className="flex flex-col  gap-8  ">
             {/* content  as cards or list */}
             <div className="flex text-[17px] items-center  gap-4">
               <div className=" items-center gap-4">
                 <ToggleButton
-                  initialState={true}
+                  initialState={showContentAsCards}
                   onChange={() => {
                     setShowContentAsCards(!showContentAsCards);
                   }}
@@ -626,66 +684,56 @@ export default function FakeWebsiteContent() {
               <div>
                 <h1 className="font-semibold text-[19px]">Card or List </h1>
                 <p className="text-[14px]">
-                  Different use case requires different view
+                  Switch between card and list views.
                 </p>
               </div>
             </div>
-
             {/* cards */}
-
             {/* turning to list or car */}
-
-            {showContentAsCards && (
-              <>
-                {/* Image */}
-                <div className="flex gap-4 font-semibold   items-center">
-                  <ToggleButton
-                    initialState={true}
-                    onChange={() => {
-                      setHideCardContentImage(!hideCardContentImage);
-                    }}
-                  />
-                  <div className="flex flex-col">
-                    <h1 className="text-[19px]">Card Images</h1>
-                    <p className="text-[14px]">
-                      {" "}
-                      Different use case requires different view
-                    </p>
-                  </div>
+            <>
+              {/* Image */}
+              <div className="flex gap-4    items-center">
+                <ToggleButton
+                  initialState={!hideCardContentImage}
+                  onChange={() => {
+                    setHideCardContentImage(!hideCardContentImage);
+                  }}
+                />
+                <div className="flex flex-col">
+                  <h1 className="text-[19px] font-semibold">Card Images</h1>
+                  <p className="text-[14px]"> Show or hide images on cards.</p>
                 </div>
-                {/* Instructor */}
-                <div className="flex gap-4 font-semibold   items-center">
-                  <ToggleButton
-                    initialState={true}
-                    onChange={() => {
-                      setHideInstructorName(!hideInstructorName);
-                    }}
-                  />
-                  <div className="flex flex-col">
-                    <h1 className="text-[19px]">Instructor</h1>
-                    <p className="text-[14px]">
-                      {" "}
-                      Different use case requires different view
-                    </p>
-                  </div>
+              </div>
+              {/* Instructor */}
+              <div className="flex gap-4 font-semibold   items-center">
+                <ToggleButton
+                  initialState={!hideInstructorName}
+                  onChange={() => {
+                    setHideInstructorName(!hideInstructorName);
+                  }}
+                />
+                <div className="flex flex-col">
+                  <h1 className="text-[19px] font-semibold">Instructor</h1>
+                  <p className="text-[14px]">
+                    {" "}
+                    Display instructor information.
+                  </p>
                 </div>
-                {/* price */}
-                <div className="flex gap-4 font-semibold  items-center">
-                  <ToggleButton
-                    initialState={false}
-                    onChange={() => {
-                      setShowPrice(!showPrice);
-                    }}
-                  />
-                  <div className="flex flex-col">
-                    <h1 className="text-[19px]">Show Price</h1>
-                    <p className="text-[14px]">
-                      Different use case requires different view
-                    </p>
-                  </div>
+              </div>
+              {/* price */}
+              <div className="flex gap-4 font-semibold  items-center">
+                <ToggleButton
+                  initialState={showPrice}
+                  onChange={() => {
+                    setShowPrice(!showPrice);
+                  }}
+                />
+                <div className="flex flex-col">
+                  <h1 className="text-[19px] font-semibold">Show Price</h1>
+                  <p className="text-[14px]">Toggle visibility of prices.</p>
                 </div>
-              </>
-            )}
+              </div>
+            </>
           </div>
         </aside>
       </ColorChangeElement>
@@ -711,7 +759,7 @@ const CourseCard: React.FC<{
   <Card
     className={cn(
       className,
-      "grid grid-rows-[160px,270px,40px]  border-t-2 rounded-md transition-all duration-500 bg-inherit !text-inherit ",
+      "grid grid-rows-[160px,270px,40px] rounded-none transition-all duration-500 bg-inherit !text-inherit ",
       {
         "grid-rows-[0px,270px,40px] ": hideCardContentImage,
         "grid-rows-[0px,240px,40px] ":
@@ -726,14 +774,14 @@ const CourseCard: React.FC<{
         src={course.image}
         alt={`${course.title} course thumbnail`}
         className={cn(
-          "w-full h-40 object-cover  rounded-t-md  border-b-[1px] translate-y-[-200px]  h-full transition-all duration-500",
+          "w-full h-40 object-cover  rounded-t-none   translate-y-[-200px]  h-full transition-all duration-500",
           {
             " translate-y-0 ": !hideCardContentImage,
           }
         )}
       />
     </CardHeader>
-    <CardContent className="flex-1 p-4 overflow-hidden">
+    <CardContent className="flex-1 p-4 overflow-hidden ">
       <h2 className="text-xl font-semibold mb-2">{course.title}</h2>
 
       <p
@@ -774,13 +822,13 @@ const CourseCard: React.FC<{
         </div>
       </div>
     </CardContent>
-    <CardFooter className="px-2 pt-2 flex justify-between ">
+    <CardFooter className="px-2 pt-3 flex justify-between ">
       {showPrice ? (
         <>
-          <p className="motion-translate-x-in-[0%] motion-translate-y-in-[20%] motion-opacity-in-[0%] font-extrabold text-2xl">
+          <p className=" px-3 motion-translate-x-in-[0%] motion-translate-y-in-[20%] motion-opacity-in-[0%] font-extrabold text-2xl">
             {course.price}$
           </p>
-          <Button className="motion-translate-x-in-[0%] motion-translate-y-in-[20%] motion-opacity-in-[0%] ">
+          <Button className=" px-3 motion-translate-x-in-[0%] motion-translate-y-in-[20%] motion-opacity-in-[0%] ">
             Enroll Now
           </Button>
         </>

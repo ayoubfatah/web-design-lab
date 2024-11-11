@@ -16,7 +16,7 @@ export const RoundedCheckbox = ({
       <div
         className={`w-5 h-5 rounded-full border ${
           checked
-            ? "bg-blue-500 border-blue-500"
+            ? "bg-yellow-400 border-yellow-400"
             : "border-gray-400 hover:border-gray-500"
         } flex items-center justify-center cursor-pointer`}
         onClick={onChange}
