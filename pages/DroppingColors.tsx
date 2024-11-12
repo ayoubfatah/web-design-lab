@@ -69,6 +69,7 @@ export default function App() {
         </div>
 
         {/*  */}
+
         <DraggableColorPalette />
       </div>
     </ColorChangeElement>
@@ -194,8 +195,8 @@ export function DraggableColorPalette() {
     { bg: "#544f52", name: "slateLow" },
     { bg: "#800080", name: "purple" },
     { bg: "#4B0082", name: "indigo" },
-    { bg: "#101720", name: "smokyBlaxk" },
-    { bg: "#0b1215", name: "obsidian" },
+    { bg: "#181818", name: "smokyBlaxk" },
+    { bg: "#212124", name: "obsidian" },
   ]);
 
   const [showColorPicker, setShowColorPicker] = useState(false);

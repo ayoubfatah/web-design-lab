@@ -554,10 +554,7 @@ export default function FakeWebsiteContent() {
         </div>
       </div>
 
-      <ColorChangeElement
-        initialColor="white"
-        className="w-[500px]   pt-4 px-8 space-y-8 flex-1 -order-1 font-medium justify-center flex items-start"
-      >
+      <div className="w-[500px]   space-y-8 flex-1 -order-1 font-medium justify-center flex flex-col items-center">
         <div className="mb-4">
           <h1 className="text-[30px] font-bold">Limitless Customization</h1>
           <p className="text-[18px] ">
@@ -736,7 +733,7 @@ export default function FakeWebsiteContent() {
             </>
           </div>
         </aside>
-      </ColorChangeElement>
+      </div>
     </main>
   );
 }
@@ -822,7 +819,7 @@ const CourseCard: React.FC<{
         </div>
       </div>
     </CardContent>
-    <CardFooter className="px-2 pt-3 flex justify-between ">
+    <CardFooter className="px-2 pt-2 flex justify-between ">
       {showPrice ? (
         <>
           <p className=" px-3 motion-translate-x-in-[0%] motion-translate-y-in-[20%] motion-opacity-in-[0%] font-extrabold text-2xl">
