@@ -91,7 +91,7 @@ const Carousel: React.FC = () => {
     <div
       ref={containerRef}
       className="flex flex-col space-y-4 overflow-hidden"
-      style={{ height: "100vh", width: "300px" }}
+      style={{ height: "100vh", width: "301px" }}
     >
       {[...imagesArray, ...imagesArray].map((image, index) => (
         <div
